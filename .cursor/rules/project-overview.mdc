@@ -1,0 +1,31 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Go Commands Project Overview
+
+This project is a Go-based service that integrates with Home Assistant through MQTT to provide system power control commands. The service allows remote control of system operations like shutdown, restart, sleep, and more.
+
+## Key Components
+
+- [main.go](mdc:main.go): The entry point that sets up MQTT connection and Home Assistant integration
+- [handler/power.go](mdc:handler/power.go): Implements system power commands (shutdown, restart, sleep, etc.)
+- [mqtt/client.go](mdc:mqtt/client.go): MQTT client implementation for Home Assistant communication
+
+## Configuration
+
+The project uses environment variables for configuration, stored in:
+- [.env](mdc:.env): Main configuration file
+- [.env.example](mdc:.env.example): Example configuration template
+
+## Linux Service Setup
+
+The project can be installed as a system service using:
+- [go-commands.service](mdc:go-commands.service): Systemd service definition
+- [setup-service.sh](mdc:setup-service.sh): Service installation script
+
+## Windows setup
+
+- The app can be setup and ran with [start.ps1](mdc:start.ps1)
+- The app can be added to startup with [setup-startup.ps1](mdc:setup-startup.ps1)

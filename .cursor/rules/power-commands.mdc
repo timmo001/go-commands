@@ -1,0 +1,38 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Power Commands Guide
+
+The power command system in [handler/power.go](mdc:handler/power.go) provides cross-platform system control functionality.
+
+## Available Commands
+
+The following power commands are supported:
+
+- Shutdown: Power off the system
+- Restart: Reboot the system
+- Sleep: Put system in sleep mode
+- Hibernate: Enable system hibernation
+- Lock: Lock the current session
+- Logout: End the current user session
+- Restart to Windows: (Linux-only) Reboot into Windows using EFI boot manager
+
+## Implementation Details
+
+Each command:
+
+- Has a unique identifier and icon for Home Assistant
+- Implements cross-platform support (Windows, Linux, macOS)
+- Uses appropriate system commands for each platform
+- Handles platform-specific edge cases
+
+## Command Configuration
+
+Commands are configured in Home Assistant through MQTT discovery, appearing as buttons with:
+
+- Descriptive names and icons
+- Unique identifiers
+- Availability tracking
+- Command topics for triggering actions

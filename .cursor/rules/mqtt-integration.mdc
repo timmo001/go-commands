@@ -1,0 +1,33 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# MQTT Integration Guide
+
+The project uses MQTT for communication with Home Assistant, implementing automatic device discovery and command handling.
+
+## MQTT Client
+
+The MQTT client implementation in [mqtt/client.go](mdc:mqtt/client.go) provides:
+
+- Automatic reconnection handling
+- Quality of Service (QoS) support
+- Home Assistant MQTT discovery message publishing
+- Topic subscription with callbacks
+
+## Home Assistant Integration
+
+The service registers itself as a device in Home Assistant with:
+
+- Status sensor showing online/offline state
+- Power command buttons for each available system command
+- Automatic device configuration through MQTT discovery
+
+## Command Topics
+
+Power commands are published to topics in the format:
+`go-commands/{unique_id}/power/{command_name}`
+
+Status updates are published to:
+`go-commands/{unique_id}/status`
