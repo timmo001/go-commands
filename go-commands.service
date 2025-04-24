@@ -1,12 +1,16 @@
 [Unit]
 Description=Go Commands
-After=network.target
+After=network-online.target
+Wants=network-online.target
 
 [Service]
+ExecStartPre=/bin/sleep 10
 ExecStart=/home/aidan/go/bin/go-commands
 WorkingDirectory=/home/aidan/.local/go-commands
 user=aidan
 group=aidan
+Restart=on-failure
+RestartSec=10
 
 [Install]
 WantedBy=default.target
