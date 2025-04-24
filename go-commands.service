@@ -1,0 +1,11 @@
+[Unit]
+Description=Go Commands
+
+[Service]
+ExecStart=/home/aidan/go/bin/go-commands
+WorkingDirectory=/home/aidan/.local/go-commands
+user=aidan
+group=aidan
+
+[Install]
+WantedBy=default.target
