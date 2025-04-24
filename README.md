@@ -53,6 +53,8 @@ sudo ./setup-service.sh
 .\setup-startup.ps1
 ```
 
+1. Restart your PC or run the shortcut from the path outputted by the script.
+
 ## Usage
 
 Once the app is installed and running, you can send commands to it via MQTT.
