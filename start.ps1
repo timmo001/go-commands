@@ -14,4 +14,4 @@ Copy-Item -Path .env -Destination $WorkingDir -Force
 Set-Location -Path $WorkingDir
 
 # Start the application
-Start-Process -FilePath "go-commands" -WorkingDirectory $WorkingDir -NoNewWindow
+go-commands
