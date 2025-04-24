@@ -18,8 +18,9 @@ $ShortcutPath = Join-Path $StartupFolder "Go Commands.lnk"
 # Create the shortcut
 $WScriptShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WScriptShell.CreateShortcut($ShortcutPath)
-$Shortcut.TargetPath = "powershell.exe"
-$Shortcut.Arguments = "-ExecutionPolicy Bypass -WindowStyle Hidden -File `"$ScriptPath`""
+$Shortcut.TargetPath = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+$Shortcut.Arguments = "-ExecutionPolicy Bypass -WindowStyle Hidden -NoLogo -NonInteractive -File `"$ScriptPath`""
+$Shortcut.WindowStyle = 7  # Minimized window
 $Shortcut.WorkingDirectory = $WorkingDir
 $Shortcut.Description = "Start Go Commands Service"
 $Shortcut.Save()
