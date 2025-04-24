@@ -5,10 +5,8 @@ Wants=network-online.target
 
 [Service]
 ExecStartPre=/bin/sleep 10
-ExecStart=/home/aidan/go/bin/go-commands
-WorkingDirectory=/home/aidan/.local/go-commands
-user=aidan
-group=aidan
+ExecStart=%h/go/bin/go-commands
+WorkingDirectory=%h/.local/go-commands
 Restart=on-failure
 RestartSec=10
 
