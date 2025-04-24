@@ -122,7 +122,7 @@ func RestartToWindows() error {
 	}
 
 	// Find the Windows Boot Manager entry
-	cmd := exec.Command("efibootmgr")
+	cmd := exec.Command("sudo", "efibootmgr")
 	output, err := cmd.Output()
 	if err != nil {
 		return fmt.Errorf("failed to run efibootmgr: %v", err)
@@ -130,11 +130,14 @@ func RestartToWindows() error {
 
 	// Parse the output to find Windows Boot Manager entry
 	bootEntry := ""
-	lines := strings.SplitSeq(string(output), "\n")
-	for line := range lines {
+	lines := strings.Split(string(output), "\n")
+	for _, line := range lines {
 		if strings.Contains(line, "Windows Boot Manager") {
-			// Extract the boot number (e.g., "Boot0001" -> "0001")
-			bootEntry = line[4:8] // Assuming format is consistent
+			// Extract the boot number (e.g., "Boot0000*" -> "0000")
+			parts := strings.Split(line, "*")
+			if len(parts) > 0 {
+				bootEntry = strings.TrimPrefix(parts[0], "Boot")
+			}
 			break
 		}
 	}
@@ -144,7 +147,7 @@ func RestartToWindows() error {
 	}
 
 	// Set Windows Boot Manager as next boot option
-	cmd = exec.Command("efibootmgr", "--bootnext", bootEntry)
+	cmd = exec.Command("sudo", "efibootmgr", "--bootnext", bootEntry)
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("failed to set Windows Boot Manager as next boot option: %v", err)
 	}
