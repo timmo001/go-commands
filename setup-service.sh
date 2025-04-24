@@ -38,3 +38,6 @@ systemctl --user daemon-reload
 systemctl --user enable --now go-commands.service
 
 echo "Service installed and started successfully!"
+
+# Check the service is running
+systemctl --user status go-commands.service
