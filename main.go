@@ -42,16 +42,18 @@ func main() {
 
 	hostname := getHostname()
 	deviceName := fmt.Sprintf("Go Commands - %s", hostname)
+	uniqueID := fmt.Sprintf("go_commands_%s", hostname)
+	baseTopic := fmt.Sprintf("go-commands/%s", uniqueID)
 
 	// Publish the Home Assistant discovery message for the server status
 	sensorConfig := map[string]interface{}{
 		"name":               "Status",
-		"unique_id":          "go_commands_status",
-		"state_topic":        "go-commands/status",
-		"availability_topic": "go-commands/availability",
+		"unique_id":          fmt.Sprintf("%s_status", uniqueID),
+		"state_topic":        fmt.Sprintf("%s/status", baseTopic),
+		"availability_topic": fmt.Sprintf("%s/availability", baseTopic),
 		"icon":               "mdi:server",
 		"device": map[string]interface{}{
-			"identifiers":  []string{"go-commands", hostname},
+			"identifiers":  []string{uniqueID},
 			"name":         deviceName,
 			"model":        "Go Commands Service",
 			"manufacturer": "Timmo",
@@ -59,13 +61,13 @@ func main() {
 	}
 
 	// Publish discovery configuration
-	err := client.PublishDiscovery("sensor", "go-commands", "status", sensorConfig)
+	err := client.PublishDiscovery("sensor", uniqueID, "status", sensorConfig)
 	if err != nil {
 		log.Error("Failed to publish discovery message", "error", err)
 	}
 
 	// Publish initial availability
-	err = client.Publish("go-commands/availability", 1, true, "running")
+	err = client.Publish(fmt.Sprintf("%s/availability", baseTopic), 1, true, "online")
 	if err != nil {
 		log.Error("Failed to publish availability", "error", err)
 	}
@@ -75,7 +77,7 @@ func main() {
 	go func() {
 		for {
 			<-ticker.C
-			err := client.Publish("go-commands/status", 1, false, "running")
+			err := client.Publish(fmt.Sprintf("%s/status", baseTopic), 1, false, "online")
 			if err != nil {
 				log.Error("Failed to publish status", "error", err)
 			}
@@ -90,7 +92,7 @@ func main() {
 	<-sigChan
 
 	// Publish offline status before exiting
-	err = client.Publish("go-commands/availability", 1, true, "offline")
+	err = client.Publish(fmt.Sprintf("%s/availability", baseTopic), 1, true, "offline")
 	if err != nil {
 		log.Error("Failed to publish offline status", "error", err)
 	}
