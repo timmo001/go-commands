@@ -8,7 +8,7 @@ if (-not (Test-Path -Path $WorkingDir)) {
 }
 
 # Copy .env file to working directory
-Copy-Item -Path "$env:USERPROFILE\.env" -Destination $WorkingDir -Force
+Copy-Item -Path .env -Destination $WorkingDir -Force
 
 # Get the startup folder path
 $StartupFolder = [System.Environment]::GetFolderPath('Startup')
