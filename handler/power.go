@@ -150,8 +150,7 @@ func RestartToWindows() error {
 	}
 
 	// Reboot the system
-	cmd = exec.Command("reboot")
-	return cmd.Run()
+	return Restart()
 }
 
 // Sleep puts the system to sleep
