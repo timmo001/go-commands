@@ -69,9 +69,9 @@ func GetPowerCommands() []PowerCommand {
 }
 
 // GetButtonConfig returns the Home Assistant button configuration for a power command
-func GetButtonConfig(device map[string]interface{}, uniqueID string, baseTopic string, cmd PowerCommand) (string, map[string]interface{}) {
+func GetButtonConfig(device map[string]any, uniqueID string, baseTopic string, cmd PowerCommand) (string, map[string]interface{}) {
 	nameAsId := strings.ReplaceAll(strings.ToLower(cmd.Name), " ", "_")
-	return nameAsId, map[string]interface{}{
+	return nameAsId, map[string]any{
 		"name":               fmt.Sprintf("%s", cmd.Name),
 		"unique_id":          fmt.Sprintf("%s_power_%s", uniqueID, nameAsId),
 		"command_topic":      fmt.Sprintf("%s/power/%s", baseTopic, nameAsId),
@@ -130,8 +130,8 @@ func RestartToWindows() error {
 
 	// Parse the output to find Windows Boot Manager entry
 	bootEntry := ""
-	lines := strings.Split(string(output), "\n")
-	for _, line := range lines {
+	lines := strings.SplitSeq(string(output), "\n")
+	for line := range lines {
 		if strings.Contains(line, "Windows Boot Manager") {
 			// Extract the boot number (e.g., "Boot0001" -> "0001")
 			bootEntry = line[4:8] // Assuming format is consistent
