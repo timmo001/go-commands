@@ -1,0 +1,10 @@
+# Executables
+go-commands
+*.exe
+
+# Logs
+*.log
+
+# Environment variables
+.env*
+!.env.example
