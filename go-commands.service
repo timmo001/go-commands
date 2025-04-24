@@ -1,5 +1,6 @@
 [Unit]
 Description=Go Commands
+After=network.target
 
 [Service]
 ExecStart=/home/aidan/go/bin/go-commands
