@@ -4,7 +4,7 @@
 mkdir -p ~/.local/go-commands
 
 # Copy .env file to working directory
-cp ~/.env ~/.local/go-commands/.env
+cp .env ~/.local/go-commands
 
 # Ensure the systemd user directory exists
 mkdir -p ~/.config/systemd/user/
