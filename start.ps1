@@ -7,6 +7,9 @@ if (-not (Test-Path -Path $WorkingDir)) {
     New-Item -ItemType Directory -Path $WorkingDir -Force
 }
 
+# Copy .env file to working directory
+Copy-Item -Path "$env:USERPROFILE\.env" -Destination $WorkingDir -Force
+
 # Set working directory
 Set-Location -Path $WorkingDir
 

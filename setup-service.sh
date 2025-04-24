@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Create working directory if it doesn't exist
+mkdir -p ~/.local/go-commands
+
+# Copy .env file to working directory
+cp ~/.env ~/.local/go-commands/.env
+
 # Ensure the systemd user directory exists
 mkdir -p ~/.config/systemd/user/
 
