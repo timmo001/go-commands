@@ -95,6 +95,30 @@ func main() {
 		}
 	}
 
+	// Get all media commands
+	mediaCommands := handler.GetMediaCommands()
+
+	// Publish discovery configuration for each media command button
+	for _, cmd := range mediaCommands {
+		nameAsId, buttonConfig := handler.GetMediaButtonConfig(device, uniqueID, baseTopic, cmd)
+		err := client.PublishDiscovery("button", uniqueID, fmt.Sprintf("media_%s", nameAsId), buttonConfig)
+		if err != nil {
+			log.Error("Failed to publish button discovery message", "error", err, "command", cmd.Name)
+		}
+
+		// Subscribe to the command topic
+		commandTopic := fmt.Sprintf("%s/media/%s", baseTopic, nameAsId)
+		err = client.Subscribe(commandTopic, 1, func(client mqtt_paho.Client, msg mqtt_paho.Message) {
+			log.Info("Executing media command", "command", cmd.Name)
+			if err := cmd.Handler(); err != nil {
+				log.Error("Failed to execute media command", "error", err, "command", cmd.Name)
+			}
+		})
+		if err != nil {
+			log.Error("Failed to subscribe to command topic", "error", err, "command", cmd.Name)
+		}
+	}
+
 	// Publish initial availability
 	err = client.Publish(fmt.Sprintf("%s/availability", baseTopic), 1, true, "online")
 	if err != nil {
