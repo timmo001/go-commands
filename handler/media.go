@@ -67,6 +67,7 @@ func GetMediaButtonConfig(device map[string]any, uniqueID string, baseTopic stri
 		"command_topic":      fmt.Sprintf("%s/media/%s", baseTopic, nameAsId),
 		"availability_topic": fmt.Sprintf("%s/availability", baseTopic),
 		"icon":               cmd.Icon,
+		"enabled_by_default": true, // Set to false to disable by default in Home Assistant
 		"device":             device,
 	}
 }
